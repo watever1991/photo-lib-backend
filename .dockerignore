@@ -1,0 +1,6 @@
+env
+auction/migrations
+auction/__pycache__
+users/migrations
+users/__pycache__
+mysite/__pycache__
