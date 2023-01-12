@@ -5,4 +5,3 @@ users/migrations
 users/__pycache__
 mysite/__pycache__
 .env
-db.sqlite3
