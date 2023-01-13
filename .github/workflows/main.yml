@@ -24,7 +24,5 @@ jobs:
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
       - name: Check running containers
         run: docker ps -a
-      - name: Check Logs
-        run: docker logs photolib
       - name: Docker Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
