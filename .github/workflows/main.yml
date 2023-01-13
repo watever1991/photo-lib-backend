@@ -22,9 +22,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
-      - uses: actions/checkout@v1
-      - name: Build the docker-compose stack
-        run: docker-compose ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
       - name: Check running containers
         run: docker ps -a
       - name: Check Logs
