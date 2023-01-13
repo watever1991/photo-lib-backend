@@ -25,13 +25,10 @@ jobs:
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
       - uses: actions/checkout@v1
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.yml up -d --build
+        run: docker-compose -f docker-compose.yml up --build
       - name: Check running containers
         run: docker ps -a
       - name: Check Logs
         run: docker logs photolib
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose.yml" down
       - name: Docker Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
