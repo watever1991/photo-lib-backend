@@ -14,8 +14,8 @@ jobs:
       - name: 'Create env file'
         run: |
           touch .env
-          echo "${{ secrets.EMAIL_HOST_USERNAME }}" >> .env
-          echo "${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
+          echo "EMAIL_HOST_USERNAME = ${{ secrets.EMAIL_HOST_USERNAME }}" >> .env
+          echo "EMAIL_HOST_PASSWORD = ${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
           cat .env
 
       - uses: actions/checkout@v3
