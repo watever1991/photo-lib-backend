@@ -13,7 +13,11 @@ jobs:
     steps:
       - name: 'Create env file'
         run: |
-          echo "${{ secrets.ENV_FILE }}" >> .env
+          touch .env
+          echo "${{ secrets.EMAIL_HOST_USERNAME }}" >> .env
+          echo "${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
+          cat .env
+
       - uses: actions/checkout@v3
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
