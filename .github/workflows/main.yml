@@ -28,7 +28,6 @@ jobs:
         uses: isbang/compose-action@v1.4.1
         compose-file: |
           docker-compose.yml
-        run: docker-compose up
       - name: Check running containers
         run: docker ps -a
       - name: Check Logs
