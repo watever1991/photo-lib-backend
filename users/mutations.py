@@ -3,6 +3,7 @@ from .models import CustomUser
 from graphene_django import DjangoObjectType
 from .password_generator import generate_password
 from django.core.mail import send_mail
+from mysite.settings import EMAIL_HOST_USER
 
 
 class UserType(DjangoObjectType):
@@ -59,16 +60,16 @@ class ForgotPasswordMutation(graphene.Mutation):
         try:
             user = CustomUser.objects.get(username=username, email=email)
         except:
-            return GetUser(success=False, errors="Invalid Details")
+            return ForgotPasswordMutation(success=False, errors="Invalid Details")
         new_password = generate_password(12)
         print(new_password)
         user.set_password(new_password)
         user.save()
         send_mail(
-            "Your New Password",
-            f"New Password {new_password}",
-            None,
-            [email],
+            subject="Your New Password",
+            message=f"New Password {new_password}",
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[email,],
             fail_silently=False
         )
-        return GetUser(user=user, success=True)
+        return ForgotPasswordMutation(user=user, success=True)
