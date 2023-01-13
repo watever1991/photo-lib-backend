@@ -1,6 +1,5 @@
 FROM python:3.11
 ENV PYTHONUNBUFFERED=1
-ENV $(cat .env | xargs)
 RUN mkdir /photolib
 WORKDIR /photolib
 ADD . /photolib/
