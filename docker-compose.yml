@@ -1,8 +1,8 @@
-version: "2.13"
+version: "3"
 services:
   web:
     build: .
-    command: "python manage.py makemigrations users && python manage.py makemigrations users && python manage.py migrate"
+    command: bash -c "python manage.py makemigrations users && python manage.py makemigrations users && python manage.py migrate"
     container_name: photolib
     volumes:
       - .:/photolib
