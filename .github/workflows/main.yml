@@ -25,7 +25,7 @@ jobs:
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/photo-lib-docker-image
       - uses: actions/checkout@v1
       - name: Build the docker-compose stack
-        run: docker-compose -f docker-compose.yml up --build
+        run: docker-compose up --build
       - name: Check running containers
         run: docker ps -a
       - name: Check Logs
