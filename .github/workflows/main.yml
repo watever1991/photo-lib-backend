@@ -11,12 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Create env file'
-        run: |
-          touch .env
-          echo "EMAIL_HOST_USERNAME = ${{ secrets.EMAIL_HOST_USERNAME }}" >> .env
-          echo "EMAIL_HOST_PASSWORD = ${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
-          cat .env
+      - name: Create .env file based on Github Secrets
+        uses: ozaytsev86/create-env-file-action@v1
+        with:
+          ENV_EMAIL_HOST_USERNAME: ${{ secrets.EMAIL_HOST_USERNAME }}
+          ENV_EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
 
       - uses: actions/checkout@v3
       - name: Log in to Docker Hub
