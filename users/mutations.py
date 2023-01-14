@@ -13,6 +13,8 @@ class UserType(DjangoObjectType):
 
 class CreateUser(graphene.Mutation):
     user = graphene.Field(UserType)
+    success = graphene.Boolean()
+    errors = graphene.String()
 
     class Arguments:
         username = graphene.String(required=True)
@@ -20,14 +22,17 @@ class CreateUser(graphene.Mutation):
         email = graphene.String(required=True)
 
     def mutate(self, info, username, email, password):
-        user = CustomUser(
-            username=username,
-            email=email,
-        )
+        try:
+            user = CustomUser(
+                username=username,
+                email=email,
+            )
+        except Exception as e:
+            return CreateUser(success=False, errors=e)
         user.set_password(password)
         user.save()
 
-        return CreateUser(user=user)
+        return CreateUser(user=user, success=True)
 
 
 class GetUser(graphene.Mutation):
