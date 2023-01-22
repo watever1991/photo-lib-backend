@@ -1,5 +1,6 @@
 FROM python:3.11
 ENV PYTHONUNBUFFERED=1
+ENV PIP_ROOT_USER_ACTION=ignore
 RUN mkdir /photolib
 WORKDIR /photolib
 ADD . /photolib/
