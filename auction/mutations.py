@@ -27,7 +27,7 @@ class PostMutation(graphene.Mutation):
     errors = graphene.String()
     
     def mutate(self, info, title, price, creator, banner=None):
-        if banner._name.split(".")[1] not in ["jpg", "png", "jpeg"]:
+        if banner and banner._name.split(".")[1] not in ["jpg", "png", "jpeg"]:
             return PostMutation(success=False, errors="Invalid Image Type")
         try:
             post = Post.objects.create(title=title, price=price, creator=creator, banner=banner)
@@ -54,7 +54,7 @@ class PostFileUploadMutation(graphene.Mutation):
     errors = graphene.String()
 
     def mutate(self, info, id, file_name, image_field=None):
-        if image_field._name.split(".")[1] not in ["jpg", "png", "jpeg"]:
+        if image_field and image_field._name.split(".")[1] not in ["jpg", "png", "jpeg"]:
             return PostFileUploadMutation(success=False, errors="Invalid Image Type")
         try:
             post = Post.objects.get(pk=id)

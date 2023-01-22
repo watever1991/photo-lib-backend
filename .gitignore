@@ -7,3 +7,6 @@ mysite/__pycache__
 .env
 db.sqlite3
 media
+mysite/tests/__pycache__
+auction/tests/__pycache__
+users/tests/__pycache__

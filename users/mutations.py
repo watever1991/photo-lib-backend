@@ -36,17 +36,16 @@ class CreateUser(graphene.Mutation):
 
 
 class GetUser(graphene.Mutation):
-    class Arguments:
-        username = graphene.String(required=True)
-        email = graphene.String(required=True)
-
     user = graphene.Field(UserType)
     success = graphene.Boolean()
     errors = graphene.String()
 
-    def mutate(self, info, username, email):
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    def mutate(self, info, id):
         try:
-            user = CustomUser.objects.get(username=username, email=email)
+            user = CustomUser.objects.get(pk=id)
         except:
             return GetUser(success=False, errors="Invalid Details")
         return GetUser(user=user, success=True)

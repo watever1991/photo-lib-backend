@@ -1,4 +1,4 @@
-name: Publish Docker Image to Docker Hub
+name: Test the Project Publish Docker Image to Docker Hub
 
 on:
   push:
@@ -7,6 +7,14 @@ on:
     branches: ['master']
 
 jobs:
+  test_project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - run: pip install -r requirements.txt
+      - run: python manage.py test mysite.tests users.tests auction.tests
   build:
     runs-on: ubuntu-latest
 
