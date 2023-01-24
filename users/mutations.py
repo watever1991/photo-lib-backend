@@ -4,6 +4,7 @@ from graphene_django import DjangoObjectType
 from .password_generator import generate_password
 from django.core.mail import send_mail
 from mysite.settings import EMAIL_HOST_USER
+from graphql_jwt.decorators import login_required
 
 
 class UserType(DjangoObjectType):
@@ -77,3 +78,23 @@ class ForgotPasswordMutation(graphene.Mutation):
             fail_silently=False
         )
         return ForgotPasswordMutation(user=user, success=True)
+
+
+class ResetPasswordMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+        current_password = graphene.String(required=True)
+        new_password = graphene.String(required=True)
+
+    success = graphene.Boolean()
+    errors = graphene.String()
+
+    @login_required
+    def mutate(self, info, id, current_password, new_password):
+        user = CustomUser.objects.get(pk=id)
+        if user.check_password(current_password):
+            user.set_password(new_password)
+            user.save()
+            return ResetPasswordMutation(success=True, errors=None)
+        else:
+            return ResetPasswordMutation(success=False, errors="Current password doesn't match")
