@@ -1,5 +1,6 @@
 from graphene_django.utils.testing import GraphQLTestCase
 from users.models import CustomUser
+from graphql_jwt.testcases import JSONWebTokenTestCase
 
 
 class CreateUserTest(GraphQLTestCase):
@@ -84,3 +85,23 @@ class ForgotPasswordMutationTest(GraphQLTestCase):
         self.assertResponseNoErrors(response)
 
 
+class ResetPasswordMutationTest(JSONWebTokenTestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create(
+                username="monire91",
+                password="monire123",
+                email="aprotim1999@gmail.com"
+            )
+        self.client.authenticate(self.user)
+
+    def test_reset_password_mutation(self):
+        query = """
+            mutation {
+                resetPassword(id: 1, currentPassword: "monire123", newPassword: "monire321") {
+                    success
+                    errors
+                }
+            }
+            """
+
+        self.client.execute(query)
