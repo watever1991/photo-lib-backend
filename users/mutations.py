@@ -106,4 +106,4 @@ class ResetPasswordMutation(graphene.Mutation):
             user.save()
             return ResetPasswordMutation(success=True, errors=None)
         else:
-            return ResetPasswordMutation(success=False, errors="Current password doesn't match")
+            raise Exception("Current Password Doesnt Match!")
