@@ -1,6 +1,7 @@
 import graphene
 import graphql_jwt
-from users.mutations import CreateUser, UserType, CustomUser, GetUser, ForgotPasswordMutation, ResetPasswordMutation
+from users.mutations import CreateUser, UserType, CustomUser, GetUser, ForgotPasswordMutation,\
+    ResetPasswordMutation, ObtainJSONWebToken
 from auction.mutations import PostMutation, PostDataMutation, PostFileUploadMutation
 
 
@@ -9,7 +10,7 @@ class AuthMutation(graphene.ObjectType):
     get_user = GetUser.Field()
     change_password_if_forgotten = ForgotPasswordMutation.Field()
     reset_password = ResetPasswordMutation.Field()
-    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    token_auth = ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 

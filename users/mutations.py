@@ -1,4 +1,5 @@
 import graphene
+import graphql_jwt
 from .models import CustomUser
 from graphene_django import DjangoObjectType
 from .password_generator import generate_password
@@ -10,6 +11,14 @@ from graphql_jwt.decorators import login_required
 class UserType(DjangoObjectType):
     class Meta:
         model = CustomUser
+
+
+class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
+    user = graphene.Field(UserType)
+
+    @classmethod
+    def resolve(cls, root, info, **kwargs):
+        return cls(user=info.context.user)
 
 
 class CreateUser(graphene.Mutation):
