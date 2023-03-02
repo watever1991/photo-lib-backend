@@ -4,6 +4,7 @@ ENV PIP_ROOT_USER_ACTION=ignore
 RUN mkdir /photolib
 WORKDIR /photolib
 ADD . /photolib/
+RUN pip install twisted_iocpsupport-1.0.2-cp311-cp311-win_amd64.whl
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python manage.py makemigrations auction
 RUN python manage.py makemigrations users
